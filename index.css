@@ -1,0 +1,191 @@
+:root {
+    --blue:             #2659a8;
+    --light-blue:       #9cc8e1;
+    --pink:             #eb2c72;
+    --light-pink:       #ef6a95;
+    --orange:           #f36e2d;
+    --light-orange:     #f59269;
+    --magenta:          #b32071;
+    --light-magenta:    #e2569d;
+
+    --bg:               #d5e7f1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    position: relative;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+main {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 60vw;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #001832;
+    padding: 4em;
+    border-radius: 2em;
+    color: white;
+}
+
+img {
+    width: 400px;
+}
+
+.main-grid {
+    display: grid;
+}
+
+.sub-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    aspect-ratio: 1 / 1;
+    background-color: var(--bg);
+}
+
+.quadrant {
+    &.b {
+        background-color: var(--blue);
+    }
+    &.lb {
+        background-color: var(--light-blue);
+    }
+    &.p {
+        background-color: var(--pink);
+    }
+    &.lp {
+        background-color: var(--light-pink);
+    }
+    &.o {
+        background-color: var(--orange);
+    }
+    &.lo {
+        background-color: var(--light-orange);
+    }
+    &.m {
+        background-color: var(--magenta);
+    }
+    &.lm {
+        background-color: var(--light-magenta);
+    }
+}
+
+/* Semi Circles */
+.NW-semi {
+    border-radius: 0% 0% 100% 0%;
+    &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 0% 0% 100% 0%;
+        }
+    }
+}
+
+.NE-semi {
+    border-radius: 0% 0% 0% 100%;
+    &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 0% 0% 0% 100%;
+        }
+    }
+}
+
+.SE-semi {
+    border-radius: 100% 0% 0% 0%;
+    &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 100% 0% 0% 0%;
+        }
+    }
+}
+
+.SW-semi {
+    border-radius: 0% 100% 0% 0%;
+    &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 0% 100% 0% 0%;
+        }
+    }
+}
+
+
+/* Petals */
+.neg-petal {
+    border-radius: 0% 100% 0% 100%;
+    &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 0% 100% 0% 100%;
+        }
+    }
+}
+
+.pos-petal {
+    border-radius: 100% 0% 100% 0%;
+    &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 100% 0% 100% 0%;
+        }
+    }
+}
+
+/* circle */
+.sm-circle {
+    border-radius: 50%;
+    /* &.inverse {
+        border-radius: 0%;
+        &::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            border-radius: 50%;
+        }
+    } */
+}
