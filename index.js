@@ -44,8 +44,7 @@ const childTypes = {
     ]
 }
 
-const columns = 10;
-const rows = 8;
+const totalCells = 200;
 
 const Departments = {
     'Anthropology': fetchJSON('./Department_Images(Complete)/Anthropology.json'),
@@ -59,14 +58,16 @@ const Departments = {
     'Sociology': fetchJSON('./Department_Images(Complete)/Sociology.json'),
 }
 
+async function fetchJSON(path) {
+    const result = await fetch(path);
+    return await result.json();
+}
 
-function main() {
+function renderGrid() {
     // initialize the grid
     const mainGrid = document.querySelector('.main-grid');
-    mainGrid.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
     mainGrid.innerHTML = null;
 
-    const totalCells = columns * rows;
     for (let i = 0; i < totalCells; i++) {
         // create a new sub grid
         const subGrid = document.createElement('div');
@@ -81,10 +82,6 @@ function main() {
     }
 }
 
-async function fetchJSON(path) {
-    const result = await fetch(path);
-    return await result.json();
-}
 
 function createNewQuadrant() {
     const quad = document.createElement('div');
@@ -110,20 +107,64 @@ function getRandomArrayValue(array) {
 }
 
 async function getRandomFaculty() {
-    const randomDepartment = getRandomArrayValue(Object.keys(Departments));
-    const randomFaculty = getRandomArrayValue(Object.keys(await Departments[randomDepartment]));
-    const facultyImageURL = (await Departments[randomDepartment])[randomFaculty];
+    const department = getRandomArrayValue(Object.keys(Departments));
+    const name = getRandomArrayValue(Object.keys(await Departments[department]));
+    const imageURL = (await Departments[department])[name];
 
-    document.querySelector('img').src = facultyImageURL;
-    document.querySelector('h1').textContent = `${randomFaculty} - ${randomDepartment}`;
+    return [
+        name,
+        department,
+        imageURL
+    ]
 }
 
-main();
-getRandomFaculty();
+async function renderQuestion() {
+    // hide the correct answer
+    const answerElement = document.querySelector('h1');
+    answerElement.classList.add('hidden');
 
-document.addEventListener('keydown', async (ev) => {
-    if (ev.key == 'Enter') {
-        main();
-        getRandomFaculty();
+    // get the choices
+    const choices = [
+        await getRandomFaculty(),
+        await getRandomFaculty(),
+        await getRandomFaculty(),
+        await getRandomFaculty()
+    ]
+
+    // render the choices
+    Array.from(document.querySelectorAll('button')).forEach((button, index) => {
+        button.textContent = choices[index][0];
+    })
+    
+    // select the correct choice
+    const correctChoice = getRandomArrayValue(choices);
+    document.querySelector('img').src = correctChoice[2];
+    answerElement.textContent = correctChoice[0] + ' - ' + correctChoice[1];
+}
+
+function handleClick() {
+    const answerElement = document.querySelector('h1');
+    if (answerElement.classList.contains('hidden')) {
+        answerElement.classList.remove('hidden');
+    } else {
+        renderGrid();
+        renderQuestion();
     }
-});
+}
+
+
+
+
+renderGrid();
+renderQuestion();
+
+// document.addEventListener('keydown', async (ev) => {
+//     if (ev.key == 'Enter') {
+//         renderGrid();
+//         renderQuestion();
+//     }
+// });
+
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', handleClick)
+})

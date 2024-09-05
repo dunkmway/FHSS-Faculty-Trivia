@@ -15,36 +15,86 @@
     box-sizing: border-box;
 }
 
+img {
+    max-width: 200px;
+    max-height: 500px;
+}
+
 body {
+    --sub-grid-width: 200px;
+
     margin: 0;
     position: relative;
     height: 100vh;
-    overflow-y: hidden;
+    width: calc(100vw + var(--sub-grid-width));
+    overflow: hidden;
 }
 
 main {
     position: absolute;
-    left: 50%;
+    left: calc(50% - calc(var(--sub-grid-width) / 2));
     top: 50%;
     transform: translate(-50%, -50%);
     min-width: 60vw;
-    min-height: 90vh;
+    max-width: 800px;
+    max-height: 80vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 1em;
     background-color: #001832;
     padding: 4em;
     border-radius: 2em;
     color: white;
 }
 
-img {
-    width: 400px;
+.question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 1em;
+}
+
+button {
+    display: block;
+    padding: 0.5em 1em;
+    font-size: 1.25rem;
+    border-radius: 0.5em;
+    border: 4px solid transparent;
+    color: white;
+
+    &.lb {
+        border-color: var(--blue);
+    }
+    &.lp {
+        border-color: var(--pink);
+    }
+    &.lo {
+        border-color: var(--orange);
+    }
+    &.lm {
+        border-color: var(--magenta);
+    }
+}
+
+button:hover {
+    scale: 1.005;
+    cursor: pointer;
 }
 
 .main-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fill, var(--sub-grid-width));
 }
 
 .sub-grid {
@@ -54,32 +104,31 @@ img {
     background-color: var(--bg);
 }
 
-.quadrant {
-    &.b {
-        background-color: var(--blue);
-    }
-    &.lb {
-        background-color: var(--light-blue);
-    }
-    &.p {
-        background-color: var(--pink);
-    }
-    &.lp {
-        background-color: var(--light-pink);
-    }
-    &.o {
-        background-color: var(--orange);
-    }
-    &.lo {
-        background-color: var(--light-orange);
-    }
-    &.m {
-        background-color: var(--magenta);
-    }
-    &.lm {
-        background-color: var(--light-magenta);
-    }
+.b {
+    background-color: var(--blue);
 }
+.lb {
+    background-color: var(--light-blue);
+}
+.p {
+    background-color: var(--pink);
+}
+.lp {
+    background-color: var(--light-pink);
+}
+.o {
+    background-color: var(--orange);
+}
+.lo {
+    background-color: var(--light-orange);
+}
+.m {
+    background-color: var(--magenta);
+}
+.lm {
+    background-color: var(--light-magenta);
+}
+
 
 /* Semi Circles */
 .NW-semi {
